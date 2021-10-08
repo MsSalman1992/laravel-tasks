@@ -26,22 +26,13 @@ stages:
 - stage: Build
   displayName: Build stage
   variables:
-    phpVersion: '7.3'
+    phpVersion: '7.2'
   jobs:
   - job: BuildJob
     pool:
       vmImage: $(vmImageName)
     steps:
-    - script: |
-        sudo update-alternatives --set php /usr/bin/php$(phpVersion)
-        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
-        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
-        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
-        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
-        php -version
-      workingDirectory: $(rootFolder)
-      displayName: 'Use PHP version $(phpVersion)'
-
+      
     - script: composer update --no-interaction --prefer-dist
     - script: composer install --no-interaction --prefer-dist
       workingDirectory: $(rootFolder)
